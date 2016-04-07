@@ -703,17 +703,17 @@ BOOL __shouldExitOnCheckResultFail = YES;
 
 + (void)clearHistoryInfo:(EZPlotHistoryInfo *)historyInfo
 {
-    memset(historyInfo->buffer, 0, historyInfo->bufferSize * sizeof(float));
     TPCircularBufferClear(&historyInfo->circularBuffer);
+    memset(historyInfo->buffer, 0, historyInfo->bufferSize * sizeof(float));
 }
 
 //------------------------------------------------------------------------------
 
 + (void)freeHistoryInfo:(EZPlotHistoryInfo *)historyInfo
 {
+    TPCircularBufferCleanup(&historyInfo->circularBuffer);
     free(historyInfo->buffer);
     free(historyInfo);
-    TPCircularBufferCleanup(&historyInfo->circularBuffer);
 }
 
 //------------------------------------------------------------------------------
